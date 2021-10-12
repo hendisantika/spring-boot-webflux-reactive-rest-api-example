@@ -1,0 +1,37 @@
+spring:
+  profiles:
+    active: dev
+---
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/reactive
+    username: user
+    password: password
+  config:
+    activate:
+      on-profile: dev
+logging:
+  level:
+    org.springframework.data.r2dbc: Debug
+---
+spring:
+  r2dbc:
+    url: r2dbc:h2:mem:///test?options=DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    name: sa
+    password:
+  config:
+    activate:
+      on-profile: test
+---
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/reactive
+    username: user
+    password: password
+  logging:
+    level:
+      org.springframework.data.r2dbc: Debug
+  config:
+    activate:
+      on-profile: prod
+
