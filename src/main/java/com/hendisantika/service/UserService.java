@@ -1,5 +1,6 @@
 package com.hendisantika.service;
 
+import com.hendisantika.model.Department;
 import com.hendisantika.model.User;
 import com.hendisantika.repository.DepartmentRepository;
 import com.hendisantika.repository.UserRepository;
@@ -70,5 +71,9 @@ public class UserService {
                 .runOn(Schedulers.elastic())
                 .flatMap(i -> findById(i))
                 .ordered((u1, u2) -> u2.getId() - u1.getId());
+    }
+
+    private Mono<Department> getDepartmentByUserId(Integer userId) {
+        return departmentRepository.findByUserId(userId);
     }
 }
