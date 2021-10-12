@@ -153,4 +153,16 @@ public class UserControllerTest {
                 .expectBody()
                 .jsonPath("$.salary").isEqualTo(newsalary);
     }
+
+    @Test
+    public void updateUser_notFound() {
+        double newsalary = 12345;
+        User user = new User(null, "Haruno Sakura", 31, newsalary);
+        webTestClient.put().uri("/users".concat("/{userId}"), "6")
+                .contentType(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE))
+                .accept(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE))
+                .body(Mono.just(user), User.class)
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
 }
