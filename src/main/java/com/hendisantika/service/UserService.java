@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -59,5 +62,13 @@ public class UserService {
 
     public Flux<User> findUsersByAge(int age) {
         return userRepository.findByAge(age);
+    }
+
+    public Flux<User> fetchUsers(List<Integer> userIds) {
+        return Flux.fromIterable(userIds)
+                .parallel()
+                .runOn(Schedulers.elastic())
+                .flatMap(i -> findById(i))
+                .ordered((u1, u2) -> u2.getId() - u1.getId());
     }
 }
