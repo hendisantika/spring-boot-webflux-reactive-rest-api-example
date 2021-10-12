@@ -139,4 +139,18 @@ public class UserControllerTest {
                 .expectStatus().isOk()
                 .expectBody(Void.class);
     }
+
+    @Test
+    public void updateUser() {
+        double newsalary = 12345;
+        User user = new User(null, "Uchiha Sasuke", 31, newsalary);
+        webTestClient.put().uri("/users".concat("/{userId}"), "1")
+                .contentType(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE))
+                .accept(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE))
+                .body(Mono.just(user), User.class)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.salary").isEqualTo(newsalary);
+    }
 }
