@@ -1,5 +1,6 @@
 package com.hendisantika.controller;
 
+import com.hendisantika.model.User;
 import com.hendisantika.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +12,9 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -35,8 +39,12 @@ public class UserControllerTest {
     @Autowired
     private UserRepository userRepository;
 
-
     @Autowired
     private DatabaseClient databaseClient;
 
+    private List<User> getData() {
+        return Arrays.asList(new User(null, "Uzumaki Naruto", 30, 10000),
+                new User(null, "Uchiha Sasuke", 35, 1000),
+                new User(null, "Haruno Sakura", 30, 1000000));
+    }
 }
