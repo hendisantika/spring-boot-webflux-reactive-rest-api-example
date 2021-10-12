@@ -56,4 +56,8 @@ public class UserService {
                 .flatMap(existingUser -> userRepository.delete(existingUser)
                         .then(Mono.just(existingUser)));
     }
+
+    public Flux<User> findUsersByAge(int age) {
+        return userRepository.findByAge(age);
+    }
 }
