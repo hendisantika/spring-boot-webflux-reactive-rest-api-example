@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : spring-boot-webflux-reactive-rest-api-example
@@ -59,5 +61,10 @@ public class UserController {
     @GetMapping("/age/{age}")
     public Flux<User> getUsersByAge(@PathVariable int age) {
         return userService.findUsersByAge(age);
+    }
+
+    @PostMapping("/search/id")
+    public Flux<User> fetchUsersByIds(@RequestBody List<Integer> ids) {
+        return userService.fetchUsers(ids);
     }
 }
