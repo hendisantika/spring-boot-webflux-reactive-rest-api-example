@@ -50,4 +50,10 @@ public class UserService {
                     return userRepository.save(dbUser);
                 });
     }
+
+    public Mono<User> deleteUser(Integer userId) {
+        return userRepository.findById(userId)
+                .flatMap(existingUser -> userRepository.delete(existingUser)
+                        .then(Mono.just(existingUser)));
+    }
 }
