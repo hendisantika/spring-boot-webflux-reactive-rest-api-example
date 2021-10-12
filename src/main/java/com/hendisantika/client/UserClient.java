@@ -4,6 +4,7 @@ import com.hendisantika.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -25,5 +26,12 @@ public class UserClient {
                 .uri("/users/{userId}", userId)
                 .retrieve()
                 .bodyToMono(User.class).log(" User fetched ");
+    }
+
+    public Flux<User> getAllUsers() {
+        return client.get()
+                .uri("/users")
+                .exchange().flatMapMany(clientResponse -> clientResponse.bodyToFlux(User.class)).log("Users Fetched :" +
+                        " ");
     }
 }
