@@ -1,8 +1,10 @@
 package com.hendisantika.client;
 
+import com.hendisantika.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 /**
  * Created by IntelliJ IDEA.
@@ -17,4 +19,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Slf4j
 public class UserClient {
     private final WebClient client = WebClient.create("http://localhost:8080");
+
+    public Mono<User> getUser(String userId) {
+        return client.get()
+                .uri("/users/{userId}", userId)
+                .retrieve()
+                .bodyToMono(User.class).log(" User fetched ");
+    }
 }
