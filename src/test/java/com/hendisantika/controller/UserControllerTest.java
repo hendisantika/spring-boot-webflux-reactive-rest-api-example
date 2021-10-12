@@ -130,4 +130,13 @@ public class UserControllerTest {
                 .jsonPath("$.id").isNotEmpty()
                 .jsonPath("$.name").isEqualTo("Asuma Sarutobi");
     }
+
+    @Test
+    public void deleteUser() {
+        webTestClient.delete().uri("/users".concat("/{userId}"), "1")
+                .accept(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Void.class);
+    }
 }
