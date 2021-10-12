@@ -1,5 +1,6 @@
 package com.hendisantika.initialize;
 
+import com.hendisantika.model.Department;
 import com.hendisantika.model.User;
 import com.hendisantika.repository.DepartmentRepository;
 import com.hendisantika.repository.UserRepository;
@@ -41,5 +42,10 @@ public class UserInitializer implements CommandLineRunner {
         return Arrays.asList(new User(null, "Uzumaki Naruto", 30, 10000),
                 new User(null, "Uchiha Sasuke", 35, 1000),
                 new User(null, "Haruno Sakura", 30, 1000000));
+    }
+
+    private List<Department> getDepartments() {
+        return Arrays.asList(new Department(null, "Mechanical", 1, "Konoha"),
+                new Department(null, "Computer", 2, "Suna"));
     }
 }
