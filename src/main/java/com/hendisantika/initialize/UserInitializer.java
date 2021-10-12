@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 
 import java.util.Arrays;
 import java.util.List;
@@ -47,5 +48,24 @@ public class UserInitializer implements CommandLineRunner {
     private List<Department> getDepartments() {
         return Arrays.asList(new Department(null, "Mechanical", 1, "Konoha"),
                 new Department(null, "Computer", 2, "Suna"));
+    }
+
+    private void initialDataSetup() {
+        userRepository.deleteAll()
+                .thenMany(Flux.fromIterable(getData()))
+                .flatMap(userRepository::save)
+                .thenMany(userRepository.findAll())
+                .subscribe(user -> {
+                    log.info("User Inserted from CommandLineRunner " + user);
+                });
+
+        departmentRepository.deleteAll()
+                .thenMany(Flux.fromIterable(getDepartments()))
+                .flatMap(departmentRepository::save)
+                .thenMany(departmentRepository.findAll())
+                .subscribe(user -> {
+                    log.info("Department Inserted from CommandLineRunner " + user);
+                });
+
     }
 }
