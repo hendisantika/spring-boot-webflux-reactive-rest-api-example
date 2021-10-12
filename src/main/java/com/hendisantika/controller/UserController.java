@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -46,5 +47,12 @@ public class UserController {
         Mono<User> user = userService.findById(userId);
         return user.map(u -> ResponseEntity.ok(u))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{userId}")
+    public Mono<ResponseEntity<User>> updateUserById(@PathVariable Integer userId, @RequestBody User user) {
+        return userService.updateUser(userId, user)
+                .map(updatedUser -> ResponseEntity.ok(updatedUser))
+                .defaultIfEmpty(ResponseEntity.badRequest().build());
     }
 }
