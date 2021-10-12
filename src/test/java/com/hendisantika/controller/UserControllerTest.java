@@ -103,4 +103,12 @@ public class UserControllerTest {
                 .verifyComplete();
 
     }
+
+    @Test
+    public void getUserById() {
+        webTestClient.get().uri("/users".concat("/{userId}"), "1")
+                .exchange().expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.name", "Suman Das");
+    }
 }
