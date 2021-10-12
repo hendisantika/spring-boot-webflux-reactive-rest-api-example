@@ -55,4 +55,9 @@ public class UserController {
                 .map(r -> ResponseEntity.ok().<Void>build())
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/age/{age}")
+    public Flux<User> getUsersByAge(@PathVariable int age) {
+        return userService.findUsersByAge(age);
+    }
 }
