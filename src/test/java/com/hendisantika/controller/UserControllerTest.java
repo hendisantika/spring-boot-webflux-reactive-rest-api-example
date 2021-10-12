@@ -16,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.util.Arrays;
@@ -116,5 +117,17 @@ public class UserControllerTest {
     public void getUserById_NotFound() {
         webTestClient.get().uri("/users".concat("/{userId}"), "6")
                 .exchange().expectStatus().isNotFound();
+    }
+
+    @Test
+    public void createUser() {
+        User user = new User(null, "Asuma Sarutobi", 45, 5555555);
+        webTestClient.post().uri("/users").contentType(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE))
+                .body(Mono.just(user), User.class)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody()
+                .jsonPath("$.id").isNotEmpty()
+                .jsonPath("$.name").isEqualTo("Asuma Sarutobi");
     }
 }
