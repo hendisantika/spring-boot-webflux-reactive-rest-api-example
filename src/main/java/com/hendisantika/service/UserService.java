@@ -41,4 +41,13 @@ public class UserService {
     public Mono<User> findById(Integer userId) {
         return userRepository.findById(userId);
     }
+
+    public Mono<User> updateUser(Integer userId, User user) {
+        return userRepository.findById(userId)
+                .flatMap(dbUser -> {
+                    dbUser.setAge(user.getAge());
+                    dbUser.setSalary(user.getSalary());
+                    return userRepository.save(dbUser);
+                });
+    }
 }
