@@ -1,5 +1,6 @@
 package com.hendisantika.service;
 
+import com.hendisantika.dto.UserDepartmentDTO;
 import com.hendisantika.model.Department;
 import com.hendisantika.model.User;
 import com.hendisantika.repository.DepartmentRepository;
@@ -75,5 +76,11 @@ public class UserService {
 
     private Mono<Department> getDepartmentByUserId(Integer userId) {
         return departmentRepository.findByUserId(userId);
+    }
+
+    public Mono<UserDepartmentDTO> fetchUserAndDepartment(Integer userId) {
+        Mono<User> user = findById(userId).subscribeOn(Schedulers.elastic());
+        Mono<Department> department = getDepartmentByUserId(userId).subscribeOn(Schedulers.elastic());
+        return Mono.zip(user, department, userDepartmentDTOBiFunction);
     }
 }
