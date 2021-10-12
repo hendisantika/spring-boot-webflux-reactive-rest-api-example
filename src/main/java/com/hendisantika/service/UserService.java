@@ -1,11 +1,13 @@
 package com.hendisantika.service;
 
+import com.hendisantika.model.User;
 import com.hendisantika.repository.DepartmentRepository;
 import com.hendisantika.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Mono;
 
 /**
  * Created by IntelliJ IDEA.
@@ -27,4 +29,7 @@ public class UserService {
     @Autowired
     private DepartmentRepository departmentRepository;
 
+    public Mono<User> createUser(User user) {
+        return userRepository.save(user);
+    }
 }
