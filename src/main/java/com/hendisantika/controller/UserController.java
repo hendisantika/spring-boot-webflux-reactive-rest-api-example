@@ -1,5 +1,6 @@
 package com.hendisantika.controller;
 
+import com.hendisantika.dto.UserDepartmentDTO;
 import com.hendisantika.model.User;
 import com.hendisantika.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,5 +67,10 @@ public class UserController {
     @PostMapping("/search/id")
     public Flux<User> fetchUsersByIds(@RequestBody List<Integer> ids) {
         return userService.fetchUsers(ids);
+    }
+
+    @GetMapping("/{userId}/department")
+    public Mono<UserDepartmentDTO> fetchUserAndDepartment(@PathVariable Integer userId) {
+        return userService.fetchUserAndDepartment(userId);
     }
 }
