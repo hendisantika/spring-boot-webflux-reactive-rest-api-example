@@ -14,6 +14,7 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 import java.util.List;
+import java.util.function.BiFunction;
 
 /**
  * Created by IntelliJ IDEA.
@@ -83,4 +84,15 @@ public class UserService {
         Mono<Department> department = getDepartmentByUserId(userId).subscribeOn(Schedulers.elastic());
         return Mono.zip(user, department, userDepartmentDTOBiFunction);
     }
+
+    private final BiFunction<User, Department, UserDepartmentDTO> userDepartmentDTOBiFunction =
+            (x1, x2) -> UserDepartmentDTO.builder()
+            .age(x1.getAge())
+            .departmentId(x2.getId())
+            .departmentName(x2.getName())
+            .userName(x1.getName())
+            .userId(x1.getId())
+            .loc(x2.getLoc())
+            .salary(x1.getSalary()).build();
+
 }
