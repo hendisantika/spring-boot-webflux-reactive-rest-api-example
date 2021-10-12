@@ -111,4 +111,10 @@ public class UserControllerTest {
                 .expectBody()
                 .jsonPath("$.name", "Suman Das");
     }
+
+    @Test
+    public void getUserById_NotFound() {
+        webTestClient.get().uri("/users".concat("/{userId}"), "6")
+                .exchange().expectStatus().isNotFound();
+    }
 }
