@@ -1,9 +1,14 @@
 package com.hendisantika.controller;
 
 import com.hendisantika.client.UserClient;
+import com.hendisantika.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,4 +26,10 @@ public class UserClientController {
     @Autowired
     private UserClient userClient;
 
+    @GetMapping("/{userId}")
+    public Mono<ResponseEntity<User>> getUserById(@PathVariable String userId) {
+        Mono<User> user = userClient.getUser(userId);
+        return user.map(u -> ResponseEntity.ok(u))
+                .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
 }
