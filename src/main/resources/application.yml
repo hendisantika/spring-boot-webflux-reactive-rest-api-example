@@ -5,14 +5,22 @@ spring:
 spring:
   r2dbc:
     url: r2dbc:postgresql://localhost:5432/reactive
-    username: user
-    password: password
+    username: hendisantika
+    password: 53cret
   config:
     activate:
       on-profile: dev
 logging:
   level:
     org.springframework.data.r2dbc: Debug
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+  api-docs:
+    path: /v3/api-docs
+  version: '@springdoc.version@'
+application-description: @project.description@
+application-version: @project.version@
 ---
 spring:
   r2dbc:

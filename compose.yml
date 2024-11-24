@@ -1,0 +1,20 @@
+networks:
+  backend:
+    name: app
+    driver: bridge
+services:
+  PostgreSQL:
+    image: postgres:17-alpine3.20
+    ports:
+      - "5433:5432"
+    networks:
+      - backend
+    environment:
+      - POSTGRES_DB=reactive
+      - POSTGRES_USER=hendisantika
+      - POSTGRES_PASSWORD=53cret
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5

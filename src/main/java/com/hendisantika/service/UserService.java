@@ -5,6 +5,7 @@ import com.hendisantika.model.Department;
 import com.hendisantika.model.User;
 import com.hendisantika.repository.DepartmentRepository;
 import com.hendisantika.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,13 +29,12 @@ import java.util.function.BiFunction;
 @Service
 @Slf4j
 @Transactional
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private DepartmentRepository departmentRepository;
+    private final DepartmentRepository departmentRepository;
 
     public Mono<User> createUser(User user) {
         return userRepository.save(user);
@@ -70,7 +70,7 @@ public class UserService {
     public Flux<User> fetchUsers(List<Integer> userIds) {
         return Flux.fromIterable(userIds)
                 .parallel()
-                .runOn(Schedulers.elastic())
+                .runOn(Schedulers.parallel())
                 .flatMap(i -> findById(i))
                 .ordered((u1, u2) -> u2.getId() - u1.getId());
     }
@@ -80,8 +80,8 @@ public class UserService {
     }
 
     public Mono<UserDepartmentDTO> fetchUserAndDepartment(Integer userId) {
-        Mono<User> user = findById(userId).subscribeOn(Schedulers.elastic());
-        Mono<Department> department = getDepartmentByUserId(userId).subscribeOn(Schedulers.elastic());
+        Mono<User> user = findById(userId).subscribeOn(Schedulers.boundedElastic());
+        Mono<Department> department = getDepartmentByUserId(userId).subscribeOn(Schedulers.boundedElastic());
         return Mono.zip(user, department, userDepartmentDTOBiFunction);
     }
 
