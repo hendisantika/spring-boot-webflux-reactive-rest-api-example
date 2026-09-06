@@ -7,8 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient;
 import org.springframework.http.MediaType;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.test.annotation.DirtiesContext;
@@ -110,7 +110,7 @@ public class UserControllerTest {
         webTestClient.get().uri("/users".concat("/{userId}"), "1")
                 .exchange().expectStatus().isOk()
                 .expectBody()
-                .jsonPath("$.name", "Suman Das");
+                .jsonPath("$.name").isEqualTo("Uzumaki Naruto");
     }
 
     @Test
