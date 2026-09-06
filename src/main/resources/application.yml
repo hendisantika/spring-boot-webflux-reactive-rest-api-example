@@ -1,6 +1,14 @@
 spring:
   profiles:
     active: dev
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+  api-docs:
+    path: /v3/api-docs
+  version: '@springdoc.version@'
+application-description: @project.description@
+application-version: @project.version@
 ---
 spring:
   r2dbc:
@@ -13,14 +21,6 @@ spring:
 logging:
   level:
     org.springframework.data.r2dbc: Debug
-springdoc:
-  swagger-ui:
-    path: /swagger-ui
-  api-docs:
-    path: /v3/api-docs
-  version: '@springdoc.version@'
-application-description: @project.description@
-application-version: @project.version@
 ---
 spring:
   r2dbc:
