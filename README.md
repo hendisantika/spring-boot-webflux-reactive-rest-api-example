@@ -10,13 +10,13 @@ This project uses [PostgreSQL](https://github.com/r2dbc/r2dbc-postgresql) implem
 
 # How to build and run
 
-project can be compiled with JDK 8 and above `javac`.
+project can be compiled with JDK 25 `javac`.
 
 To compile just do `mvn clean package`.
 
 ## Prerequisites
 
-* JAVA 8 should be installed
+* JDK 25 should be installed
 * Postgres should be up and running at : <localhost:5432>
 
 To run the application execute the following:
