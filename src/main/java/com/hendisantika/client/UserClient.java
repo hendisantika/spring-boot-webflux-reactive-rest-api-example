@@ -32,7 +32,7 @@ public class UserClient {
     public Flux<User> getAllUsers() {
         return client.get()
                 .uri("/users")
-                .exchange().flatMapMany(clientResponse -> clientResponse.bodyToFlux(User.class)).log("Users Fetched :" +
+                .exchangeToFlux(clientResponse -> clientResponse.bodyToFlux(User.class)).log("Users Fetched :" +
                         " ");
     }
 
