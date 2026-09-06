@@ -20,12 +20,12 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table("department")
+@Table("DEPARTMENT")
 public class Department {
     @Id
     private Integer id;
     private String name;
-    @Column("user_id")
+    @Column("USER_ID")
     private Integer userId;
     private String loc;
 }
