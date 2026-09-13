@@ -15,6 +15,6 @@ import reactor.core.publisher.Flux;
  * Time: 19.18
  */
 public interface UserRepository extends ReactiveCrudRepository<User, Integer> {
-    @Query("select * from users where age >= $1")
+    @Query("select * from \"users\" where age >= $1")
     Flux<User> findByAge(int age);
 }
