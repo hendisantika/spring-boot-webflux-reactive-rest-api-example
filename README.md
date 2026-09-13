@@ -41,10 +41,12 @@ starts the container on startup and wires the R2DBC connection details automatic
 docker compose up -d
 ```
 
-The container exposes PostgreSQL on host port `5433` (database `reactive`, user `hendisantika`,
-password `53cret`). If you prefer to run your own PostgreSQL, the `dev` profile expects it at
-<localhost:5432> — override `spring.r2dbc.*` in `application.yml` or via environment variables to
-point somewhere else.
+The container publishes PostgreSQL on host port `5433` (database `reactive`, user `hendisantika`,
+password `53cret`), which is what the `dev` profile connects to — so the application also works
+against the container when Docker Compose support is switched off
+(`spring.docker.compose.enabled=false`) and you start it yourself. If you prefer to run your own
+PostgreSQL, override `spring.r2dbc.*` in `application.yml` or via environment variables to point
+somewhere else.
 
 Tables are created on every startup from `src/main/resources/schema.sql`, and `UserInitializer`
 seeds sample users and departments.
@@ -53,7 +55,7 @@ seeds sample users and departments.
 
 | Profile | Database                                  |
 |---------|-------------------------------------------|
-| `dev`   | PostgreSQL at `localhost:5432` (default)  |
+| `dev`   | PostgreSQL at `localhost:5433` (default)  |
 | `test`  | in-memory H2 (no seeding)                 |
 | `prod`  | PostgreSQL at `localhost:5432`            |
 

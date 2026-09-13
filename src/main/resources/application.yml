@@ -12,7 +12,7 @@ application-version: @project.version@
 ---
 spring:
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/reactive
+    url: r2dbc:postgresql://localhost:5433/reactive
     username: hendisantika
     password: 53cret
   config:
